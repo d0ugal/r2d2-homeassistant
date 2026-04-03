@@ -3,7 +3,7 @@
     "name": "R2D2",
     "bluetooth": [
         {
-            "local_name": "R2D2"
+            "local_name": "R2D2*"
         }
     ],
     "codeowners": [

@@ -40,7 +40,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         discovered = {
             info.address: f"{info.name} ({info.address})"
             for info in bluetooth.async_discovered_service_info(self.hass)
-            if info.name == "R2D2"
+            if info.name and info.name.startswith("R2D2")
         }
 
         schema = vol.Schema(
