@@ -1,0 +1,14 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "python",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "custom_components/r2d2/manifest.json",
+          "jsonpath": "$.version"
+        }
+      ]
+    }
+  }
+}
