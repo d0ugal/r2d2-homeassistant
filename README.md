@@ -8,7 +8,7 @@ directly to the droid via Bluetooth with no cloud dependencies.
 ## Features
 
 - **Move** — drive in 8 directions (cardinal + diagonal) for a set duration; stops automatically
-- **Sound effects** — 16 character reaction sounds (8 Star Wars characters × good/bad reaction)
+- **Sound effects** — 10 built-in sound effects (sfx_1 through sfx_10)
 - **Head control** — rotate the head to left, centre, or right
 - **LED control** — set the blue and red LED brightness independently (0–3)
 - **BLE sensor** — exposes a `sensor.r2d2_ble_connected` entity showing connection state
@@ -54,27 +54,13 @@ action: r2d2.stop
 
 ### `r2d2.play_sound`
 
-Play one of R2D2's built-in character reaction sounds, discovered by disassembling
-the official Android app.
+Play one of R2D2's 10 built-in sound effects.
 
 ```yaml
 action: r2d2.play_sound
 data:
-  sound: r2d2_good
+  sound: sfx_7   # sfx_1 through sfx_10
 ```
-
-Available sounds:
-
-| Sound key | Character | Reaction |
-|---|---|---|
-| `c3po_good` / `c3po_bad` | C-3PO | Good / Bad |
-| `chewbacca_good` / `chewbacca_bad` | Chewbacca | Good / Bad |
-| `han_good` / `han_bad` | Han Solo | Good / Bad |
-| `leia_good` / `leia_bad` | Princess Leia | Good / Bad |
-| `luke_good` / `luke_bad` | Luke Skywalker | Good / Bad |
-| `obiwan_good` / `obiwan_bad` | Obi-Wan Kenobi | Good / Bad |
-| `r2d2_good` / `r2d2_bad` | R2-D2 | Good / Bad |
-| `stormtrooper_good` / `stormtrooper_bad` | Stormtrooper | Good / Bad |
 
 ### `r2d2.set_head`
 
@@ -102,39 +88,65 @@ data:
 
 ## Example automations
 
-**Greet someone at the door**
+**Drive forward and come back**
+
+A simple script that moves forward, spins 180°, and returns.
+
 ```yaml
-automation:
-  - alias: R2D2 Doorbell
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.front_door_visitor
-        to: "on"
-    action:
+script:
+  r2d2_there_and_back:
+    alias: R2D2 There and Back
+    sequence:
       - action: r2d2.play_sound
-        data:
-          sound: r2d2_good
-      - delay: "00:00:02"
+        data: {sound: sfx_7}
       - action: r2d2.move
-        data:
-          direction: forward
-          move_for: 1
+        data: {direction: forward, move_for: 1.5, speed: 3}
+      - delay: "00:00:01.7"
+      - action: r2d2.move
+        data: {direction: left, move_for: 0.7, speed: 3}
+      - delay: "00:00:00.9"
+      - action: r2d2.move
+        data: {direction: forward, move_for: 1.5, speed: 3}
+      - delay: "00:00:01.7"
+      - action: r2d2.stop
 ```
 
-**Scheduled wake-up**
+**Flash lights and beep when a script finishes**
+
+Useful as a notification at the end of any other automation.
+
 ```yaml
-automation:
-  - alias: R2D2 Morning
-    trigger:
-      - platform: time
-        at: "08:00:00"
     action:
       - action: r2d2.set_leds
-        data:
-          blue: 3
+        data: {blue: 3, red: 0}
       - action: r2d2.play_sound
-        data:
-          sound: luke_good
+        data: {sound: sfx_7}
+      - delay: "00:00:01"
+      - action: r2d2.set_leds
+        data: {blue: 0, red: 0}
+```
+
+**Spin and beep on button press**
+
+Pair with an HA dashboard button or a physical Zigbee button.
+
+```yaml
+automation:
+  - alias: R2D2 Button Press
+    trigger:
+      - platform: state
+        entity_id: input_button.r2d2_spin
+    action:
+      - action: r2d2.set_leds
+        data: {blue: 3, red: 0}
+      - action: r2d2.play_sound
+        data: {sound: sfx_7}
+      - action: r2d2.move
+        data: {direction: left, move_for: 0.8, speed: 3}
+      - delay: "00:00:01"
+      - action: r2d2.set_leds
+        data: {blue: 0, red: 0}
+      - action: r2d2.stop
 ```
 
 ---
