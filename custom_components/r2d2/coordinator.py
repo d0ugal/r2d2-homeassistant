@@ -181,10 +181,19 @@ class R2D2Coordinator(DataUpdateCoordinator):
 # ------------------------------------------------------------------
 
 def _direction_to_motors(direction: str) -> tuple[int, int]:
-    """Return (mt1, mt2) motor direction bytes for a given movement direction."""
+    """Return (mt1, mt2) motor direction bytes for a given movement direction.
+
+    Cardinal directions run both motors equally.
+    Diagonal directions stop one motor so the robot curves; the active
+    motor still runs at the caller-supplied speed.
+    """
     return {
-        "forward": (MOTOR_FORWARD, MOTOR_FORWARD),
-        "reverse": (MOTOR_REVERSE, MOTOR_REVERSE),
-        "left": (MOTOR_REVERSE, MOTOR_FORWARD),
-        "right": (MOTOR_FORWARD, MOTOR_REVERSE),
+        "forward":       (MOTOR_FORWARD,  MOTOR_FORWARD),
+        "reverse":       (MOTOR_REVERSE,  MOTOR_REVERSE),
+        "left":          (MOTOR_REVERSE,  MOTOR_FORWARD),
+        "right":         (MOTOR_FORWARD,  MOTOR_REVERSE),
+        "forward_left":  (MOTOR_STOP,     MOTOR_FORWARD),
+        "forward_right": (MOTOR_FORWARD,  MOTOR_STOP),
+        "reverse_left":  (MOTOR_STOP,     MOTOR_REVERSE),
+        "reverse_right": (MOTOR_REVERSE,  MOTOR_STOP),
     }.get(direction, (MOTOR_STOP, MOTOR_STOP))

@@ -19,7 +19,10 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _SCHEMA_MOVE = vol.Schema(
     {
-        vol.Required("direction"): vol.In(["forward", "reverse", "left", "right"]),
+        vol.Required("direction"): vol.In([
+            "forward", "reverse", "left", "right",
+            "forward_left", "forward_right", "reverse_left", "reverse_right",
+        ]),
         vol.Required("move_for"): vol.All(vol.Coerce(float), vol.Range(min=0.1, max=30)),
         vol.Optional("speed"): vol.All(int, vol.Range(min=0, max=3)),
     }
@@ -27,7 +30,7 @@ _SCHEMA_MOVE = vol.Schema(
 _SCHEMA_STOP = vol.Schema({})
 _SCHEMA_PLAY_SOUND = vol.Schema(
     {
-        vol.Required("sound"): vol.In(["sound_1", "sound_2", "sound_3", "sound_4"]),
+        vol.Required("sound"): str,
     }
 )
 _SCHEMA_SET_HEAD = vol.Schema(

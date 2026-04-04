@@ -2,7 +2,7 @@
 
 Protocol: 20-byte write to UUID_WRITE, no response required.
 
-Packet layout:
+Packet layout (confirmed by ARM64 disassembly of libil2cpp.so):
   [0]    0xB5  header
   [1]    snd   sound effect (momentary; 0x00 = silent)
   [2]    0x00  padding
@@ -11,11 +11,15 @@ Packet layout:
   [5]    mt2   motor-2 direction
   [6]    sp2   motor-2 speed
   [7]    hed   head position (0x04=left … 0x14=center … 0x24=right)
-  [8]    0x00  padding
-  [9]    0x00  padding
-  [10]   ldb   blue LED brightness (0–3)
-  [11]   ldr   red  LED brightness (0–3)
+  [8]    ldb   first LED unit — green/blue channel (0–3)
+  [9]    ldr   first LED unit — red channel (0–3)
+  [10]   ldb   second LED unit — green/blue channel (mirror of [8])
+  [11]   ldr   second LED unit — red channel (mirror of [9])
   [12–19]      fixed tail: 7C 6B 5A 49 38 27 16 05
+
+  Note: the hardware has two bicolour (red/green) LED units. The app
+  labels the green channel "blue" because R2-D2 is blue. Both units
+  are driven identically so all four bytes are always set.
 """
 
 from __future__ import annotations
@@ -54,9 +58,8 @@ def build_packet(
         mt1, sp1,
         mt2, sp2,
         head,
-        0x00, 0x00,
-        led_blue,
-        led_red,
+        led_blue, led_red,    # first LED unit (green/blue + red)
+        led_blue, led_red,    # second LED unit (mirror)
     ])
     return body + PACKET_FIXED_TAIL
 

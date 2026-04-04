@@ -10,9 +10,13 @@ move:
         select:
           options:
             - forward
-            - reverse
+            - forward_left
+            - forward_right
             - left
             - right
+            - reverse
+            - reverse_left
+            - reverse_right
     move_for:
       name: Duration (seconds)
       description: How many seconds to move before stopping automatically.
