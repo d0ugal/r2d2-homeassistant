@@ -33,16 +33,16 @@ HEAD_POSITIONS = {
 # The app's character gallery triggers full movement+sound sequences; these are
 # just the raw sound bytes used by the numbered sound UI.
 SOUNDS = {
-    "sfx_1":  0x01,  # R2-D2
-    "sfx_2":  0x02,  # Obi-Wan Kenobi
-    "sfx_3":  0x03,  # Luke Skywalker
+    "sfx_1":  0x01,  # C-3PO
+    "sfx_2":  0x02,  # Chewbacca
+    "sfx_3":  0x03,  # Han Solo
     "sfx_4":  0x04,  # Princess Leia
-    "sfx_5":  0x05,  # Han Solo
-    "sfx_6":  0x06,  # Chewbacca
-    "sfx_7":  0x07,  # C-3PO
-    "sfx_8":  0x08,  # C-3PO (alternate)
-    "sfx_9":  0x0A,  # Han Solo (alternate)
-    "sfx_10": 0x0C,  # Luke Skywalker (alternate)
+    "sfx_5":  0x05,  # Luke Skywalker
+    "sfx_6":  0x06,  # Obi-Wan Kenobi
+    "sfx_7":  0x07,  # R2-D2
+    "sfx_8":  0x08,  # Stormtrooper
+    "sfx_9":  0x0A,  # Darth Vader
+    "sfx_10": 0x0C,  # Yoda
 }
 
 # Character reaction byte pairs (GoodRobotReaction / BadRobotReaction).
