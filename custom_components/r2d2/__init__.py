@@ -19,10 +19,18 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _SCHEMA_MOVE = vol.Schema(
     {
-        vol.Required("direction"): vol.In([
-            "forward", "reverse", "left", "right",
-            "forward_left", "forward_right", "reverse_left", "reverse_right",
-        ]),
+        vol.Required("direction"): vol.In(
+            [
+                "forward",
+                "reverse",
+                "left",
+                "right",
+                "forward_left",
+                "forward_right",
+                "reverse_left",
+                "reverse_right",
+            ]
+        ),
         vol.Required("move_for"): vol.All(vol.Coerce(float), vol.Range(min=0.1, max=30)),
         vol.Optional("speed"): vol.All(int, vol.Range(min=0, max=3)),
     }
@@ -66,11 +74,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     def _coordinators():
-        return [
-            c
-            for c in hass.data.get(DOMAIN, {}).values()
-            if isinstance(c, R2D2Coordinator)
-        ]
+        return [c for c in hass.data.get(DOMAIN, {}).values() if isinstance(c, R2D2Coordinator)]
 
     async def _move(call) -> None:
         speed = call.data.get("speed", MOTOR_SPEED_DEFAULT)
@@ -117,9 +121,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
         hass.data[DOMAIN].pop(entry.entry_id)
 
-    if not any(
-        isinstance(c, R2D2Coordinator) for c in hass.data.get(DOMAIN, {}).values()
-    ):
+    if not any(isinstance(c, R2D2Coordinator) for c in hass.data.get(DOMAIN, {}).values()):
         for svc in ("move", "stop", "play_sound", "set_head", "set_leds"):
             hass.services.async_remove(DOMAIN, svc)
 

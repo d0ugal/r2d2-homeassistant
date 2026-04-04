@@ -27,3 +27,6 @@ pythonVersion = "3.12"
 include = ["custom_components/r2d2"]
 typeCheckingMode = "basic"
 reportMissingImports = "warning"
+reportMissingModuleSource = "none"
+reportGeneralTypeIssues = "none"
+reportCallIssue = "none"

@@ -33,15 +33,15 @@ HEAD_POSITIONS = {
 # The app's character gallery triggers full movement+sound sequences; these are
 # just the raw sound bytes used by the numbered sound UI.
 SOUNDS = {
-    "sfx_1":  0x01,  # C-3PO
-    "sfx_2":  0x02,  # Chewbacca
-    "sfx_3":  0x03,  # Han Solo
-    "sfx_4":  0x04,  # Princess Leia
-    "sfx_5":  0x05,  # Luke Skywalker
-    "sfx_6":  0x06,  # Obi-Wan Kenobi
-    "sfx_7":  0x07,  # R2-D2
-    "sfx_8":  0x08,  # Stormtrooper
-    "sfx_9":  0x0A,  # Darth Vader
+    "sfx_1": 0x01,  # C-3PO
+    "sfx_2": 0x02,  # Chewbacca
+    "sfx_3": 0x03,  # Han Solo
+    "sfx_4": 0x04,  # Princess Leia
+    "sfx_5": 0x05,  # Luke Skywalker
+    "sfx_6": 0x06,  # Obi-Wan Kenobi
+    "sfx_7": 0x07,  # R2-D2
+    "sfx_8": 0x08,  # Stormtrooper
+    "sfx_9": 0x0A,  # Darth Vader
     "sfx_10": 0x0C,  # Yoda
 }
 
@@ -51,22 +51,22 @@ SOUNDS = {
 # NOTE: 0x00 (stormtrooper_bad) = silence; 0x09/0x0B/0x0D-0x0F are reaction
 # bytes not present in the Sfx table and may duplicate nearby sounds.
 CHARACTER_SOUNDS = {
-    "r2d2_bad":          0x01,
-    "obiwan_bad":        0x02,
-    "luke_bad":          0x03,
-    "leia_bad":          0x04,
-    "han_bad":           0x05,
-    "chewbacca_bad":     0x06,
-    "c3po_bad":          0x07,
-    "c3po_good":         0x08,
-    "chewbacca_good":    0x09,
-    "han_good":          0x0A,
-    "leia_good":         0x0B,
-    "luke_good":         0x0C,
-    "obiwan_good":       0x0D,
-    "r2d2_good":         0x0E,
+    "r2d2_bad": 0x01,
+    "obiwan_bad": 0x02,
+    "luke_bad": 0x03,
+    "leia_bad": 0x04,
+    "han_bad": 0x05,
+    "chewbacca_bad": 0x06,
+    "c3po_bad": 0x07,
+    "c3po_good": 0x08,
+    "chewbacca_good": 0x09,
+    "han_good": 0x0A,
+    "leia_good": 0x0B,
+    "luke_good": 0x0C,
+    "obiwan_good": 0x0D,
+    "r2d2_good": 0x0E,
     "stormtrooper_good": 0x0F,
-    "stormtrooper_bad":  0x00,  # silence
+    "stormtrooper_bad": 0x00,  # silence
 }
 
 # Additional sounds found in APK (purpose unknown, for testing)

@@ -87,16 +87,17 @@ class R2D2Coordinator(DataUpdateCoordinator):
             await self.async_connect()
 
         mt1, mt2 = _direction_to_motors(direction)
-        self._move_task = self.hass.async_create_task(
-            self._run_move(mt1, mt2, speed, move_for)
-        )
+        self._move_task = self.hass.async_create_task(self._run_move(mt1, mt2, speed, move_for))
 
-    async def _run_move(
-        self, mt1: int, mt2: int, speed: int, duration: float
-    ) -> None:
+    async def _run_move(self, mt1: int, mt2: int, speed: int, duration: float) -> None:
         packet = build_packet(
-            mt1=mt1, sp1=speed, mt2=mt2, sp2=speed,
-            head=self._head, led_blue=self._led_blue, led_red=self._led_red,
+            mt1=mt1,
+            sp1=speed,
+            mt2=mt2,
+            sp2=speed,
+            head=self._head,
+            led_blue=self._led_blue,
+            led_red=self._led_red,
         )
         try:
             await self._client.send(packet)
@@ -115,8 +116,13 @@ class R2D2Coordinator(DataUpdateCoordinator):
 
     async def _send_stop(self) -> None:
         packet = build_packet(
-            mt1=MOTOR_STOP, sp1=0, mt2=MOTOR_STOP, sp2=0,
-            head=self._head, led_blue=self._led_blue, led_red=self._led_red,
+            mt1=MOTOR_STOP,
+            sp1=0,
+            mt2=MOTOR_STOP,
+            sp2=0,
+            head=self._head,
+            led_blue=self._led_blue,
+            led_red=self._led_red,
         )
         try:
             await self._client.send(packet)
@@ -133,13 +139,17 @@ class R2D2Coordinator(DataUpdateCoordinator):
         sound_id = SOUNDS.get(sound, 0x00)
         packet = build_packet(
             sound=sound_id,
-            head=self._head, led_blue=self._led_blue, led_red=self._led_red,
+            head=self._head,
+            led_blue=self._led_blue,
+            led_red=self._led_red,
         )
         await self._client.send(packet)
         # Send a follow-up packet with sound=0 so the sound plays once
         await asyncio.sleep(0.2)
         packet = build_packet(
-            head=self._head, led_blue=self._led_blue, led_red=self._led_red,
+            head=self._head,
+            led_blue=self._led_blue,
+            led_red=self._led_red,
         )
         await self._client.send(packet)
 
@@ -156,7 +166,9 @@ class R2D2Coordinator(DataUpdateCoordinator):
         except (ValueError, TypeError):
             self._head = HEAD_POSITIONS.get(str(position), HEAD_CENTER)
         packet = build_packet(
-            head=self._head, led_blue=self._led_blue, led_red=self._led_red,
+            head=self._head,
+            led_blue=self._led_blue,
+            led_red=self._led_red,
         )
         await self._client.send(packet)
 
@@ -176,7 +188,9 @@ class R2D2Coordinator(DataUpdateCoordinator):
         if red is not None:
             self._led_red = max(0, min(LED_MAX, red))
         packet = build_packet(
-            head=self._head, led_blue=self._led_blue, led_red=self._led_red,
+            head=self._head,
+            led_blue=self._led_blue,
+            led_red=self._led_red,
         )
         await self._client.send(packet)
         self.async_set_updated_data({"connected": self._client.is_connected})
@@ -186,6 +200,7 @@ class R2D2Coordinator(DataUpdateCoordinator):
 # Helpers
 # ------------------------------------------------------------------
 
+
 def _direction_to_motors(direction: str) -> tuple[int, int]:
     """Return (mt1, mt2) motor direction bytes for a given movement direction.
 
@@ -194,12 +209,12 @@ def _direction_to_motors(direction: str) -> tuple[int, int]:
     motor still runs at the caller-supplied speed.
     """
     return {
-        "forward":       (MOTOR_FORWARD,  MOTOR_FORWARD),
-        "reverse":       (MOTOR_REVERSE,  MOTOR_REVERSE),
-        "left":          (MOTOR_REVERSE,  MOTOR_FORWARD),
-        "right":         (MOTOR_FORWARD,  MOTOR_REVERSE),
-        "forward_left":  (MOTOR_STOP,     MOTOR_FORWARD),
-        "forward_right": (MOTOR_FORWARD,  MOTOR_STOP),
-        "reverse_left":  (MOTOR_STOP,     MOTOR_REVERSE),
-        "reverse_right": (MOTOR_REVERSE,  MOTOR_STOP),
+        "forward": (MOTOR_FORWARD, MOTOR_FORWARD),
+        "reverse": (MOTOR_REVERSE, MOTOR_REVERSE),
+        "left": (MOTOR_REVERSE, MOTOR_FORWARD),
+        "right": (MOTOR_FORWARD, MOTOR_REVERSE),
+        "forward_left": (MOTOR_STOP, MOTOR_FORWARD),
+        "forward_right": (MOTOR_FORWARD, MOTOR_STOP),
+        "reverse_left": (MOTOR_STOP, MOTOR_REVERSE),
+        "reverse_right": (MOTOR_REVERSE, MOTOR_STOP),
     }.get(direction, (MOTOR_STOP, MOTOR_STOP))

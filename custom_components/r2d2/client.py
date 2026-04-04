@@ -51,16 +51,22 @@ def build_packet(
     led_blue: int = 0x00,
     led_red: int = 0x00,
 ) -> bytes:
-    body = bytes([
-        PACKET_HEADER,
-        sound,
-        0x00,
-        mt1, sp1,
-        mt2, sp2,
-        head,
-        led_blue, led_red,    # first LED unit (green/blue + red)
-        led_blue, led_red,    # second LED unit (mirror)
-    ])
+    body = bytes(
+        [
+            PACKET_HEADER,
+            sound,
+            0x00,
+            mt1,
+            sp1,
+            mt2,
+            sp2,
+            head,
+            led_blue,
+            led_red,  # first LED unit (green/blue + red)
+            led_blue,
+            led_red,  # second LED unit (mirror)
+        ]
+    )
     return body + PACKET_FIXED_TAIL
 
 
@@ -80,9 +86,7 @@ class R2D2Client:
             return
         _LOGGER.debug("Connecting to R2D2 at %s", self._address)
         if ble_device is not None:
-            self._client = await establish_connection(
-                BleakClient, ble_device, self._address
-            )
+            self._client = await establish_connection(BleakClient, ble_device, self._address)
         else:
             client = BleakClient(self._address)
             self._client = client
