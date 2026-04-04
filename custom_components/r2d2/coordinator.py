@@ -15,7 +15,9 @@ from .const import (
     CONF_MAC,
     DOMAIN,
     HEAD_CENTER,
+    HEAD_LEFT,
     HEAD_POSITIONS,
+    HEAD_RIGHT,
     LED_MAX,
     MOTOR_FORWARD,
     MOTOR_REVERSE,
@@ -149,7 +151,7 @@ class R2D2Coordinator(DataUpdateCoordinator):
         if not self.is_connected:
             await self.async_connect()
         try:
-            # Accept raw byte value (4–36) for fine-grained control
+            # Accept raw byte value (4-36) for fine-grained control
             self._head = max(HEAD_LEFT, min(HEAD_RIGHT, int(position)))
         except (ValueError, TypeError):
             self._head = HEAD_POSITIONS.get(str(position), HEAD_CENTER)

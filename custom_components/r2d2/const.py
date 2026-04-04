@@ -17,7 +17,7 @@ MOTOR_FORWARD = 0x01
 MOTOR_REVERSE = 0x02
 MOTOR_SPEED_DEFAULT = 0x03
 
-# Head positions (byte value range 0x04–0x24)
+# Head positions (byte value range 0x04-0x24)
 HEAD_CENTER = 0x14
 HEAD_LEFT = 0x04
 HEAD_RIGHT = 0x24
@@ -28,7 +28,7 @@ HEAD_POSITIONS = {
     "right": HEAD_RIGHT,
 }
 
-# The 10 direct sound IDs confirmed from the Sfx1–Sfx10 table in libil2cpp.so.
+# The 10 direct sound IDs confirmed from the Sfx1-Sfx10 table in libil2cpp.so.
 # Cross-referenced with the character reaction table to give meaningful names.
 # The app's character gallery triggers full movement+sound sequences; these are
 # just the raw sound bytes used by the numbered sound UI.
@@ -48,7 +48,7 @@ SOUNDS = {
 # Character reaction byte pairs (GoodRobotReaction / BadRobotReaction).
 # These are NOT just sounds — the official app combines them with movement
 # sequences. Kept here for reference/experimentation.
-# NOTE: 0x00 (stormtrooper_bad) = silence; 0x09/0x0B/0x0D–0x0F are reaction
+# NOTE: 0x00 (stormtrooper_bad) = silence; 0x09/0x0B/0x0D-0x0F are reaction
 # bytes not present in the Sfx table and may duplicate nearby sounds.
 CHARACTER_SOUNDS = {
     "r2d2_bad":          0x01,
@@ -99,6 +99,6 @@ ANIMATIONS = {
     "anim_0x28": 0x28,
 }
 
-# LED brightness: 0x00 (off) – 0x03 (max)
+# LED brightness: 0x00 (off) - 0x03 (max)
 LED_OFF = 0x00
 LED_MAX = 0x03

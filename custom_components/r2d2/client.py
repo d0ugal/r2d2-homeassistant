@@ -7,15 +7,15 @@ Packet layout (confirmed by ARM64 disassembly of libil2cpp.so):
   [1]    snd   sound effect (momentary; 0x00 = silent)
   [2]    0x00  padding
   [3]    mt1   motor-1 direction (0=stop, 1=fwd, 2=rev)
-  [4]    sp1   motor-1 speed (0–3)
+  [4]    sp1   motor-1 speed (0-3)
   [5]    mt2   motor-2 direction
   [6]    sp2   motor-2 speed
   [7]    hed   head position (0x04=left … 0x14=center … 0x24=right)
-  [8]    ldb   first LED unit — green/blue channel (0–3)
-  [9]    ldr   first LED unit — red channel (0–3)
+  [8]    ldb   first LED unit — green/blue channel (0-3)
+  [9]    ldr   first LED unit — red channel (0-3)
   [10]   ldb   second LED unit — green/blue channel (mirror of [8])
   [11]   ldr   second LED unit — red channel (mirror of [9])
-  [12–19]      fixed tail: 7C 6B 5A 49 38 27 16 05
+  [12-19]      fixed tail: 7C 6B 5A 49 38 27 16 05
 
   Note: the hardware has two bicolour (red/green) LED units. The app
   labels the green channel "blue" because R2-D2 is blue. Both units
@@ -84,8 +84,9 @@ class R2D2Client:
                 BleakClient, ble_device, self._address
             )
         else:
-            self._client = BleakClient(self._address)
-            await self._client.connect()
+            client = BleakClient(self._address)
+            self._client = client
+            await client.connect()
         _LOGGER.debug("Connected to R2D2")
 
     async def disconnect(self) -> None:
@@ -101,6 +102,7 @@ class R2D2Client:
             _LOGGER.warning("R2D2 not connected — skipping send")
             return
         try:
+            assert self._client is not None
             await self._client.write_gatt_char(UUID_WRITE, packet, response=False)
         except Exception as exc:
             _LOGGER.error("Failed to send packet to R2D2: %s", exc)

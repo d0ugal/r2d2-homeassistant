@@ -10,7 +10,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
-from .const import CONF_MAC, DOMAIN, LED_MAX, MOTOR_SPEED_DEFAULT
+from .const import DOMAIN, LED_MAX, MOTOR_SPEED_DEFAULT
 
 _LOGGER = logging.getLogger(__name__)
 
