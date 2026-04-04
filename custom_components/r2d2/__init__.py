@@ -35,7 +35,10 @@ _SCHEMA_PLAY_SOUND = vol.Schema(
 )
 _SCHEMA_SET_HEAD = vol.Schema(
     {
-        vol.Required("position"): vol.In(["left", "center", "right"]),
+        vol.Required("position"): vol.Any(
+            vol.In(["left", "center", "right"]),
+            vol.All(vol.Coerce(int), vol.Range(min=4, max=36)),
+        ),
     }
 )
 _SCHEMA_SET_LEDS = vol.Schema(

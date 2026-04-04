@@ -145,10 +145,14 @@ class R2D2Coordinator(DataUpdateCoordinator):
     # Head
     # ------------------------------------------------------------------
 
-    async def do_set_head(self, position: str) -> None:
+    async def do_set_head(self, position) -> None:
         if not self.is_connected:
             await self.async_connect()
-        self._head = HEAD_POSITIONS.get(position, HEAD_CENTER)
+        try:
+            # Accept raw byte value (4–36) for fine-grained control
+            self._head = max(HEAD_LEFT, min(HEAD_RIGHT, int(position)))
+        except (ValueError, TypeError):
+            self._head = HEAD_POSITIONS.get(str(position), HEAD_CENTER)
         packet = build_packet(
             head=self._head, led_blue=self._led_blue, led_red=self._led_red,
         )
