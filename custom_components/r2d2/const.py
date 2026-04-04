@@ -28,39 +28,49 @@ HEAD_POSITIONS = {
     "right": HEAD_RIGHT,
 }
 
-# Sound IDs (GoodRobotReaction / BadRobotReaction pairs per character,
-# discovered by disassembling the Clementoni Android APK)
+# The 10 direct sound IDs confirmed from the Sfx1–Sfx10 table in libil2cpp.so.
+# Cross-referenced with the character reaction table to give meaningful names.
+# The app's character gallery triggers full movement+sound sequences; these are
+# just the raw sound bytes used by the numbered sound UI.
 SOUNDS = {
-    # C-3PO
-    "c3po_good": 0x08,
-    "c3po_bad": 0x07,
-    # Chewbacca
-    "chewbacca_good": 0x09,
-    "chewbacca_bad": 0x06,
-    # Han Solo
-    "han_good": 0x0A,
-    "han_bad": 0x05,
-    # Princess Leia
-    "leia_good": 0x0B,
-    "leia_bad": 0x04,
-    # Luke Skywalker
-    "luke_good": 0x0C,
-    "luke_bad": 0x03,
-    # Obi-Wan Kenobi
-    "obiwan_good": 0x0D,
-    "obiwan_bad": 0x02,
-    # R2-D2
-    "r2d2_good": 0x0E,
-    "r2d2_bad": 0x01,
-    # Stormtrooper
-    "stormtrooper_good": 0x0F,
-    "stormtrooper_bad": 0x00,
+    "sfx_1":  0x01,  # R2-D2
+    "sfx_2":  0x02,  # Obi-Wan Kenobi
+    "sfx_3":  0x03,  # Luke Skywalker
+    "sfx_4":  0x04,  # Princess Leia
+    "sfx_5":  0x05,  # Han Solo
+    "sfx_6":  0x06,  # Chewbacca
+    "sfx_7":  0x07,  # C-3PO
+    "sfx_8":  0x08,  # C-3PO (alternate)
+    "sfx_9":  0x0A,  # Han Solo (alternate)
+    "sfx_10": 0x0C,  # Luke Skywalker (alternate)
 }
 
-# Additional sounds found in APK not mapped to a character reaction
-# (snd byte, byte[3]=0x00 normal mode — purpose unknown, for testing)
+# Character reaction byte pairs (GoodRobotReaction / BadRobotReaction).
+# These are NOT just sounds — the official app combines them with movement
+# sequences. Kept here for reference/experimentation.
+# NOTE: 0x00 (stormtrooper_bad) = silence; 0x09/0x0B/0x0D–0x0F are reaction
+# bytes not present in the Sfx table and may duplicate nearby sounds.
+CHARACTER_SOUNDS = {
+    "r2d2_bad":          0x01,
+    "obiwan_bad":        0x02,
+    "luke_bad":          0x03,
+    "leia_bad":          0x04,
+    "han_bad":           0x05,
+    "chewbacca_bad":     0x06,
+    "c3po_bad":          0x07,
+    "c3po_good":         0x08,
+    "chewbacca_good":    0x09,
+    "han_good":          0x0A,
+    "leia_good":         0x0B,
+    "luke_good":         0x0C,
+    "obiwan_good":       0x0D,
+    "r2d2_good":         0x0E,
+    "stormtrooper_good": 0x0F,
+    "stormtrooper_bad":  0x00,  # silence
+}
+
+# Additional sounds found in APK (purpose unknown, for testing)
 SOUNDS_EXTRA = {
-    "extra_0x0b": 0x0B,
     "extra_0x18": 0x18,
     "extra_0x1e": 0x1E,
     "extra_0x1f": 0x1F,

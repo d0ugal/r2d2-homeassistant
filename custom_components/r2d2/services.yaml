@@ -52,22 +52,16 @@ play_sound:
       selector:
         select:
           options:
-            - c3po_good
-            - c3po_bad
-            - chewbacca_good
-            - chewbacca_bad
-            - han_good
-            - han_bad
-            - leia_good
-            - leia_bad
-            - luke_good
-            - luke_bad
-            - obiwan_good
-            - obiwan_bad
-            - r2d2_good
-            - r2d2_bad
-            - stormtrooper_good
-            - stormtrooper_bad
+            - sfx_1
+            - sfx_2
+            - sfx_3
+            - sfx_4
+            - sfx_5
+            - sfx_6
+            - sfx_7
+            - sfx_8
+            - sfx_9
+            - sfx_10
 
 set_head:
   name: Set Head Position
