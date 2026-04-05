@@ -14,7 +14,7 @@ from .const import DOMAIN, LED_MAX, MOTOR_SPEED_DEFAULT
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS: list[Platform] = [Platform.SENSOR]
+PLATFORMS: list[Platform] = [Platform.BUTTON, Platform.LIGHT, Platform.SELECT, Platform.SENSOR]
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _SCHEMA_MOVE = vol.Schema(
