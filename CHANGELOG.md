@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/d0ugal/r2d2-homeassistant/compare/v1.1.0...v1.2.0) (2026-04-05)
+
+
+### Features
+
+* add button, select, and light entity platforms ([2d36b15](https://github.com/d0ugal/r2d2-homeassistant/commit/2d36b15f2b8b41cd25f8b86baa98a8ada01954ed))
+
 ## [1.1.0](https://github.com/d0ugal/r2d2-homeassistant/compare/v1.0.0...v1.1.0) (2026-04-04)
 
 
