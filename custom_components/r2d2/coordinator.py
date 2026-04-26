@@ -87,7 +87,9 @@ class R2D2Coordinator(DataUpdateCoordinator):
             await self.async_connect()
 
         mt1, mt2 = _direction_to_motors(direction)
-        self._move_task = self.hass.async_create_task(self._run_move(mt1, mt2, speed, move_for))
+        self._move_task = self.hass.async_create_task(
+            self._run_move(mt1, mt2, speed, move_for)
+        )
 
     async def _run_move(self, mt1: int, mt2: int, speed: int, duration: float) -> None:
         packet = build_packet(
