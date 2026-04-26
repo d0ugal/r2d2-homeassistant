@@ -36,9 +36,7 @@ _SCHEMA_MOVE = vol.Schema(
                 "reverse_right",
             ]
         ),
-        vol.Required("move_for"): vol.All(
-            vol.Coerce(float), vol.Range(min=0.1, max=30)
-        ),
+        vol.Required("move_for"): vol.All(vol.Coerce(float), vol.Range(min=0.1, max=30)),
         vol.Optional("speed"): vol.All(int, vol.Range(min=0, max=3)),
     }
 )
@@ -81,11 +79,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     def _coordinators():
-        return [
-            c
-            for c in hass.data.get(DOMAIN, {}).values()
-            if isinstance(c, R2D2Coordinator)
-        ]
+        return [c for c in hass.data.get(DOMAIN, {}).values() if isinstance(c, R2D2Coordinator)]
 
     async def _move(call) -> None:
         speed = call.data.get("speed", MOTOR_SPEED_DEFAULT)
@@ -114,9 +108,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if not hass.services.has_service(DOMAIN, "move"):
         hass.services.async_register(DOMAIN, "move", _move, _SCHEMA_MOVE)
         hass.services.async_register(DOMAIN, "stop", _stop, _SCHEMA_STOP)
-        hass.services.async_register(
-            DOMAIN, "play_sound", _play_sound, _SCHEMA_PLAY_SOUND
-        )
+        hass.services.async_register(DOMAIN, "play_sound", _play_sound, _SCHEMA_PLAY_SOUND)
         hass.services.async_register(DOMAIN, "set_head", _set_head, _SCHEMA_SET_HEAD)
         hass.services.async_register(DOMAIN, "set_leds", _set_leds, _SCHEMA_SET_LEDS)
 
@@ -134,9 +126,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
         hass.data[DOMAIN].pop(entry.entry_id)
 
-    if not any(
-        isinstance(c, R2D2Coordinator) for c in hass.data.get(DOMAIN, {}).values()
-    ):
+    if not any(isinstance(c, R2D2Coordinator) for c in hass.data.get(DOMAIN, {}).values()):
         for svc in ("move", "stop", "play_sound", "set_head", "set_leds"):
             hass.services.async_remove(DOMAIN, svc)
 

@@ -88,8 +88,7 @@ async def async_setup_entry(
     coordinator: R2D2Coordinator = hass.data[DOMAIN][entry.entry_id]
     mac = entry.data[CONF_MAC]
     entities = [
-        R2D2Button(coordinator, entry, mac, desc)
-        for desc in _MOVEMENT_BUTTONS + _SOUND_BUTTONS
+        R2D2Button(coordinator, entry, mac, desc) for desc in _MOVEMENT_BUTTONS + _SOUND_BUTTONS
     ]
     async_add_entities(entities)
 
