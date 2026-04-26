@@ -86,7 +86,9 @@ class R2D2Client:
             return
         _LOGGER.debug("Connecting to R2D2 at %s", self._address)
         if ble_device is not None:
-            self._client = await establish_connection(BleakClient, ble_device, self._address)
+            self._client = await establish_connection(
+                BleakClient, ble_device, self._address
+            )
         else:
             client = BleakClient(self._address)
             self._client = client
