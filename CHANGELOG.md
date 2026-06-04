@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/d0ugal/r2d2-homeassistant/compare/v1.2.0...v1.2.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* loosen bleak pins to allow HA-bundled bleak 3.x ([04d19e5](https://github.com/d0ugal/r2d2-homeassistant/commit/04d19e5008e7f2781f9e7f7969216ea48c415b2c))
+
 ## [1.2.0](https://github.com/d0ugal/r2d2-homeassistant/compare/v1.1.0...v1.2.0) (2026-04-05)
 
 
