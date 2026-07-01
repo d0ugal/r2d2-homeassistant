@@ -24,6 +24,7 @@ Packet layout (confirmed by ARM64 disassembly of libil2cpp.so):
 
 from __future__ import annotations
 
+import contextlib
 import logging
 
 from bleak import BleakClient
@@ -95,10 +96,8 @@ class R2D2Client:
 
     async def disconnect(self) -> None:
         if self._client:
-            try:
+            with contextlib.suppress(Exception):
                 await self._client.disconnect()
-            except Exception:
-                pass
             self._client = None
 
     async def send(self, packet: bytes) -> None:
